@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grandmaster AI Chess</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1><i class="fas fa-chess-knight"></i> AI CHESS MASTER</h1>
+    </header>
+
+    <main>
+        <div class="game-area">
+            <div id="board" class="shadow-lg"></div>
+        </div>
+
+        <aside class="sidebar">
+            <div class="panel status-panel">
+                <h3><i class="fas fa-info-circle"></i> 게임 상태</h3>
+                <div id="status">상대방을 기다리는 중...</div>
+                <div id="loading" class="spinner" style="display:none;"></div>
+            </div>
+
+            <div class="panel control-panel">
+                <h3><i class="fas fa-cog"></i> 설정</h3>
+                <label>난이도 (AI 엔진 깊이)</label>
+                <select id="difficulty">
+                    <option value="1">입문자 (Lv.1)</option>
+                    <option value="5" selected>일반인 (Lv.5)</option>
+                    <option value="12">아마추어 (Lv.12)</option>
+                    <option value="18">프로 (Lv.18)</option>
+                </select>
+                <button id="resetBtn" class="btn-primary"><i class="fas fa-redo"></i> 새 게임 시작</button>
+                <button id="undoBtn" class="btn-secondary"><i class="fas fa-undo"></i> 한 수 물리기</button>
+            </div>
+            
+            <div class="panel history-panel">
+                <h3><i class="fas fa-history"></i> 기보 (PGN)</h3>
+                <div id="pgn-output" class="pgn-box"></div>
+            </div>
+        </aside>
+    </main>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
