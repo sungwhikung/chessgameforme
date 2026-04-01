@@ -1,38 +1,13 @@
-// 모든 변수를 밖으로 빼서 어디서든 접근 가능하게 설정
 var board = null;
 var game = new Chess();
 var engine = null;
 
-// 이미지 경로 (공식 경로)
+// 1. 이미지 경로 설정
 function pieceTheme(piece) {
     return 'https://chessboardjs.com/img/chesspieces/wikipedia/' + piece + '.png';
 }
 
-// 초기화 함수를 별도로 만듦
-function initGame() {
-    var boardEl = document.getElementById('myBoard');
-    
-    // 만약 아직 HTML에 myBoard가 없다면 0.1초 뒤에 다시 시도 (무한 루프 방지 위해 체크)
-    if (!boardEl) {
-        console.log("보드를 찾는 중...");
-        setTimeout(initGame, 100);
-        return;
-    }
-
-    var config = {
-        draggable: true,
-        position: 'start',
-        onDragStart: onDragStart,
-        onDrop: onDrop,
-        onSnapEnd: function() { board.position(game.fen()); },
-        pieceTheme: pieceTheme
-    };
-
-    board = Chessboard('myBoard', config);
-    updateStatus();
-}
-
-// AI 엔진 로드
+// 2. AI 엔진 로드 (비동기)
 fetch('https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.0/stockfish.js')
     .then(res => res.text())
     .then(text => {
@@ -43,11 +18,36 @@ fetch('https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.0/stockfish.js')
             if (e.data.includes('bestmove')) {
                 const moveStr = e.data.split(' ')[1];
                 game.move({ from: moveStr.substring(0, 2), to: moveStr.substring(2, 4), promotion: 'q' });
-                board.position(game.fen());
+                if (board) board.position(game.fen());
                 updateStatus();
             }
         };
     });
+
+// 3. 체스 보드 초기화 함수 (강력한 에러 방지 버전)
+function checkAndInit() {
+    var element = document.getElementById('myBoard');
+    
+    // 만약 엘리먼트가 아직 없으면 0.1초 뒤에 다시 실행
+    if (!element) {
+        setTimeout(checkAndInit, 100);
+        return;
+    }
+
+    // 엘리먼트가 발견되면 그때 보드 생성
+    var config = {
+        draggable: true,
+        position: 'start',
+        onDragStart: onDragStart,
+        onDrop: onDrop,
+        onSnapEnd: function() { if(board) board.position(game.fen()); },
+        pieceTheme: pieceTheme
+    };
+
+    board = Chessboard('myBoard', config);
+    updateStatus();
+    console.log("체스보드 로드 완료!");
+}
 
 function onDragStart(source, piece) {
     if (game.game_over() || piece.search(/^b/) !== -1) return false;
@@ -70,9 +70,13 @@ function updateStatus() {
     $('#pgn-log').text(game.pgn());
 }
 
-// 브라우저가 준비되면 실행
-$(document).ready(initGame);
+// 4. 실행 (HTML이 로드될 때까지 반복 확인)
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkAndInit);
+} else {
+    checkAndInit();
+}
 
-// 버튼 이벤트
+// 버튼 이벤트 (위임 방식)
 $(document).on('click', '#resetBtn', function() { game.reset(); board.start(); updateStatus(); });
 $(document).on('click', '#undoBtn', function() { game.undo(); game.undo(); board.position(game.fen()); updateStatus(); });
