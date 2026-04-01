@@ -1,129 +1,73 @@
-:root {
-    --bg-color: #0f172a;
-    --card-bg: #1e293b;
-    --accent-color: #38bdf8;
-    --text-main: #f8fafc;
-    --text-dim: #94a3b8;
-}
-
 body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    font-family: 'Pretendard', sans-serif;
     margin: 0;
-    padding: 20px;
+    background: #0f172a;
+    color: #f8fafc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.app-wrapper {
-    max-width: 1000px;
-    width: 100%;
+.app-container {
+    width: 90%;
+    max-width: 1100px;
 }
 
-header h1 {
-    text-align: center;
-    color: var(--accent-color);
-    font-size: 2rem;
-    margin-bottom: 30px;
-}
-
-.game-container {
+.chess-main {
     display: grid;
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: 1fr 350px;
     gap: 30px;
 }
 
-/* 체스판 섹션 */
-.board-section {
-    background: #334155;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+.board-wrapper {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-#myBoard {
-    width: 100%;
-}
-
-/* 사이드바 섹션 */
-.control-section {
+.side-panel {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.status-card {
-    background: var(--accent-color);
-    color: #0f172a;
-    padding: 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-    font-size: 1.1rem;
-}
-
-.settings-card, .pgn-card {
-    background: var(--card-bg);
+.info-box, .control-box, .history-box {
+    background: #1e293b;
     padding: 20px;
     border-radius: 12px;
-}
-
-h3 {
-    margin: 0 0 15px 0;
-    font-size: 1rem;
-    color: var(--text-dim);
-}
-
-.setting-item label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-}
-
-select {
-    width: 100%;
-    padding: 10px;
-    background: #0f172a;
-    color: white;
     border: 1px solid #334155;
-    border-radius: 6px;
-    margin-bottom: 15px;
 }
 
-.button-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+#status { margin: 0; font-size: 1.2rem; color: #38bdf8; text-align: center; }
 
-button {
+select, button {
+    width: 100%;
     padding: 12px;
+    border-radius: 8px;
     border: none;
-    border-radius: 6px;
-    cursor: pointer;
     font-weight: bold;
-    transition: 0.3s;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
-.primary-btn { background: var(--accent-color); color: #000; }
-.secondary-btn { background: #475569; color: white; }
-button:hover { filter: brightness(1.2); }
+select { background: #0f172a; color: white; border: 1px solid #475569; }
 
-.pgn-content {
+.btn-main { background: #38bdf8; color: #0f172a; }
+.btn-sub { background: #475569; color: white; }
+button:hover { filter: brightness(1.2); transform: translateY(-1px); }
+
+#pgn-log {
     height: 150px;
+    overflow-y: auto;
     background: #0f172a;
     padding: 10px;
-    border-radius: 6px;
     font-family: monospace;
-    font-size: 0.85rem;
-    overflow-y: auto;
-    color: var(--text-dim);
-    line-height: 1.6;
+    font-size: 0.9rem;
+    color: #94a3b8;
 }
 
-/* 모바일 화면 조정 */
-@media (max-width: 800px) {
-    .game-container { grid-template-columns: 1fr; }
-    .control-section { order: 2; }
+@media (max-width: 850px) {
+    .chess-main { grid-template-columns: 1fr; }
 }
