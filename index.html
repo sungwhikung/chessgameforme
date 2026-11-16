@@ -2,40 +2,85 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chess Pro</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#15171a">
+    <title>체스 — AI 대국</title>
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 
-<div class="app-container">
-    <div class="chess-main">
-        <div class="board-wrapper">
-            <div id="myBoard" style="width: 100%"></div>
+<main class="app">
+    <section class="table">
+        <div class="player" id="barTop">
+            <span class="avatar"></span>
+            <span class="who"></span>
+            <span class="taken"></span>
+            <span class="lead"></span>
         </div>
 
-        <aside class="side-panel">
-            <div class="info-box"><h2 id="status">로딩 중...</h2></div>
-            <div class="control-box">
-                <select id="difficulty">
-                    <option value="3">초보</option>
-                    <option value="10" selected>중급</option>
-                    <option value="15">상급</option>
-                </select>
-                <button id="resetBtn">새 게임</button>
-                <button id="undoBtn">무르기</button>
+        <div class="board" id="board" aria-label="체스판">
+            <div class="squares" id="squares"></div>
+            <div class="pieces" id="pieces"></div>
+            <div class="promo" id="promo" hidden></div>
+            <div class="result" id="result" hidden>
+                <div class="result-card">
+                    <p class="result-title" id="resultTitle"></p>
+                    <p class="result-sub" id="resultSub"></p>
+                    <div class="result-actions">
+                        <button class="btn primary" id="resultNew">새 게임</button>
+                        <button class="btn ghost" id="resultClose">보드 보기</button>
+                    </div>
+                </div>
             </div>
-            <div id="pgn-log"></div>
-        </aside>
-    </div>
-</div>
+        </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+        <div class="player" id="barBottom">
+            <span class="avatar"></span>
+            <span class="who"></span>
+            <span class="taken"></span>
+            <span class="lead"></span>
+        </div>
+    </section>
 
-<script src="script.js?v=2"></script>
+    <aside class="panel">
+        <header class="brand">
+            <h1>체스</h1>
+            <p>Stockfish와 두는 한 판</p>
+        </header>
+
+        <div class="status" id="status" aria-live="polite">
+            <span class="dot"></span>
+            <span id="statusText">불러오는 중…</span>
+        </div>
+
+        <div class="field">
+            <span class="label">난이도</span>
+            <div class="seg" id="levelSeg" role="radiogroup" aria-label="난이도"></div>
+        </div>
+
+        <div class="field">
+            <span class="label">내 색</span>
+            <div class="seg" id="colorSeg" role="radiogroup" aria-label="내 색">
+                <button data-color="w" role="radio">백</button>
+                <button data-color="b" role="radio">흑</button>
+            </div>
+        </div>
+
+        <div class="moves-wrap">
+            <span class="label">기보</span>
+            <ol class="moves" id="moves"></ol>
+        </div>
+
+        <div class="actions">
+            <button class="btn primary" id="newBtn">새 게임</button>
+            <button class="btn" id="undoBtn">무르기</button>
+            <button class="btn icon" id="flipBtn" title="보드 뒤집기" aria-label="보드 뒤집기">⇅</button>
+            <button class="btn icon" id="soundBtn" title="소리" aria-label="소리 켜기/끄기">♪</button>
+        </div>
+    </aside>
+</main>
+
+<script src="vendor/chess.js"></script>
+<script src="script.js?v=3"></script>
 </body>
 </html>
