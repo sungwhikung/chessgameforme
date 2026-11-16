@@ -8,18 +8,20 @@
 
 ## 실행
 
-Web Worker와 WASM을 쓰기 때문에 `index.html`을 직접 열지 말고 웹 서버로 띄워야 합니다.
+Web Worker와 WASM을 쓰기 때문에 `docs/index.html`을 직접 열지 말고 웹 서버로 띄워야 합니다.
 
 ```bash
-python3 -m http.server 8000
+python3 -m http.server 8000 --directory docs
 ```
 
 그다음 `http://localhost:8000`을 엽니다. GitHub Pages에서는 그대로 동작합니다.
 
-## 포함된 외부 코드 (`vendor/`)
+## 포함된 외부 코드 (`docs/vendor/`)
 
 | 파일 | 출처 | 라이선스 |
 | --- | --- | --- |
 | `stockfish-19-lite-single.js/.wasm` | [Stockfish.js](https://github.com/nmrugg/stockfish.js) 19.0.1 | GPL-3.0 (`stockfish.COPYING.txt`) |
 | `chess.js` | [chess.js](https://github.com/jhlywa/chess.js) 0.10.3 | BSD-2-Clause (`chess.js.LICENSE`) |
 | `pieces.svg` | Wikimedia Commons 기물 (Cburnett, Rfc1394), [cm-chessboard](https://github.com/shaack/cm-chessboard) 스프라이트 | CC BY-SA 3.0 |
+
+사이트 파일은 `docs/` 폴더에 있습니다. GitHub Pages가 `main` 브랜치의 `/docs` 폴더를 배포하도록 설정되어 있기 때문입니다.
